@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.mycode.ssh.entity.Customer" table="t_customer">
+		<id name="cid" column="cid">
+			<generator class="native"></generator>
+		</id>
+		<property name="custName" column="custName" />
+		<property name="custLevel" column="custLevel" />
+		<property name="custSource" column="custSource" />
+		<property name="custLinkman" column="custLinkman" />
+		<property name="custPhone" column="custPhone" />
+		<property name="custMobile" column="custMobile" />
+		<!-- Customer(一) ,LiknMan(多) -->
+		<set name="setlinkMan" cascade="delete">
+			<key column="clid"></key>
+			<one-to-many class="com.mycode.ssh.entity.LinkMan" />
+		</set>
+
+		<!-- Customer(一) LinkMan(多) -->
+		<set name="setCusVisit">
+			<key column="cvid"></key>
+			<one-to-many class="com.mycode.ssh.entity.Visit" />
+		</set>
+
+	</class>
+</hibernate-mapping>

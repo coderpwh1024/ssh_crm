@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx.xsd">
+	<!-- C3P0 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="com.mysql.jdbc.Driver"/>
+		<property name="jdbcUrl" value="jdbc:mysql:///ssh"/>
+		<property name="user" value="root"/>
+		<property name="password" value="root"/>
+	</bean>
+	
+        <!-- SessionFactory -->
+         <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+               <property name="dataSource" ref="dataSource"/>
+              <!-- 核心配置 -->
+          <property name="configLocations" value="classpath:hibernate.cfg.xml"/>
+         </bean>
+          <!-- 开启事务注解 -->
+	   <tx:annotation-driven transaction-manager="transactionManager"/>
+         
+           <!--  事物配置  -->
+            <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+             <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+         
+         <!--  hibernateTemplate -->
+         
+  <!--     <bean id="hibernateTemplate" class="org.springframework.orm.hibernate5.HibernateTemplate">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean> -->
+      
+         <!-- User模块 -->
+	<bean id="userDao" class="com.mycode.ssh.dao.UserDao">
+	   <property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+
+	<bean id="userService" class="com.mycode.ssh.service.UserService">
+		<property name="userDao" ref="userDao"></property>
+	</bean>
+	
+	<bean id="userAction" class="com.mycode.ssh.action.UserAction">
+		<property name="userService" ref="userService"></property>
+	</bean>
+	
+	 <!-- Customer模块 -->
+	  <bean id="customerDao" class="com.mycode.ssh.dao.CustomerDao">
+	    <property name="sessionFactory" ref="sessionFactory"></property>
+	  </bean>
+	  <bean id="customerService" class="com.mycode.ssh.service.CustomerService">
+	   <property name="customerDao" ref="customerDao"></property>
+	  </bean>
+	  <bean id="customerAction" class="com.mycode.ssh.action.CustomerAction">
+	   <property name="customerService" ref="customerService"></property>
+	  </bean>
+	  
+	  <!--LinkMan模块  -->
+	  <bean id="linkManDao" class="com.mycode.ssh.dao.LinkManDao" scope="prototype">
+	   <property name="sessionFactory" ref="sessionFactory"></property>
+	  </bean>
+	  <bean id="linkManService" class="com.mycode.ssh.service.LinkManService">
+	   <property name="linkManDao" ref="linkManDao"></property>
+	  </bean>
+	  <bean id="linkManAction" class="com.mycode.ssh.action.LinkManAction">
+	   <property name="linkManService" ref="linkManService"></property>
+	   <property name="customerService" ref="customerService"></property>
+	  </bean>
+	   
+	  <!-- Visit -->
+	  <bean id="visitDao" class="com.mycode.ssh.dao.VisitDao">
+	   <property name="sessionFactory" ref="sessionFactory"></property>
+	  </bean>
+	  <bean id="visitService" class="com.mycode.ssh.service.VisitService">
+	   <property name="visitDao" ref="visitDao"></property>
+	  </bean>
+	  <bean id="visitAction" class="com.mycode.ssh.action.VisitAction">
+	  <property name="visitService" ref="visitService"></property>
+	  <property name="customerService" ref="customerService"></property>
+	   <property name="userService" ref="userService"></property>
+	  </bean>
+	  
+	 
+
+</beans>
