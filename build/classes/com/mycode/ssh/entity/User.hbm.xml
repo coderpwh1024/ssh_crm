@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.mycode.ssh.entity.User" table="t_user">
+		<id name="uid" column="uid">
+			<generator class="native"></generator>
+		</id>
+		<property name="username" column="username" type="string" />
+		<property name="password" column="password" type="string" />
+		<property name="address" column="address" type="string" />
+		
+		<!-- setUserVisit User(一) Visit(多) -->
+		<set name="setUserVisit">
+			<key column="uvid"></key>
+			<one-to-many class="com.mycode.ssh.entity.Visit"/>
+		</set>
+
+	</class>
+</hibernate-mapping>
+    

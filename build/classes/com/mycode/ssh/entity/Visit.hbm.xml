@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.mycode.ssh.entity.Visit" table="t_visit">
+		<id name="visitId" column="visitId">
+			<generator class="native"></generator>
+		</id>
+	<!-- 	private String visitAddress;
+	private String visitConent;
+
+	private Customer customer;
+	private User user; -->
+		<property name="visitAddress" column="visitAddress" />
+		<property name="visitConent" column="visitConent" />
+		   
+		 <!--User(一)  Visit（多）  -->
+		  <!-- lazy="false" 延迟加载 -->
+		<many-to-one name="user" class="com.mycode.ssh.entity.User" column="uvid" lazy="false"></many-to-one>
+	  
+	    <!-- Customer(一) Visti(多) -->
+	    <many-to-one name="customer" class="com.mycode.ssh.entity.Customer" column="cvid" lazy="false">
+	    </many-to-one>
+	    
+	</class>
+
+</hibernate-mapping>

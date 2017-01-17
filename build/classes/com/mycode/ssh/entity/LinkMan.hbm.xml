@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+     <hibernate-mapping>
+     <class name="com.mycode.ssh.entity.LinkMan" table="t_linkman">
+       <id name="lkmId" column="lkmId">
+        <generator class="native"></generator>
+       </id>
+       <property name="lkmName" column="lkmName" type="string"/>
+       <property name="lkmGerder" column="lkmGerder" type="string"/>
+       <property name="lkmPhone" column="lkmPhone" type="string"/>
+       <property name="lkmMobile" column="lkmMobile" type="string" />
+        <!--linkMan(多) customer(一)  -->
+            <!-- lazy =false  延迟加载 -->
+          <many-to-one name="customer" class="com.mycode.ssh.entity.Customer" column="clid" lazy="false"></many-to-one> 
+     </class> 
+     </hibernate-mapping>

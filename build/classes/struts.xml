@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+<!--  <constant name="struts.multipart.maxSize" value="2097152*1024*1024"></constant> -->
+	<package name="demo" extends="struts-default" namespace="/">
+	
+	      <!-- user 模块 -->
+		<action name="user_*" class="userAction" method="{1}">
+		 <result name="login_success">/index.htm</result>
+		 <result name="login">/login.jsp</result>
+		</action>
+		
+		    <!-- customer 模块 -->
+		 <action name="customer_*" class="customerAction" method="{1}">
+		   <!-- 先添加页面（add.jsp）后添加 customer -->
+		  <result name="addPage">/jsp/customer/add.jsp</result>
+		  <result name="addCustomer" type="redirectAction">customer_list</result>
+		   
+		    <!-- 列表页面, 删除-->  
+		    <result name="list">/jsp/customer/list.jsp</result>
+		  <result name="deleteCus" type="redirectAction">customer_list</result>
+		     
+		     <!--修改  -->
+		   <result name="showCus">/jsp/customer/edit.jsp</result>
+		   <result name="update">customer_list</result>
+		   
+		    
+		    <!-- 分页 -->
+		     <result name="listpage">/jsp/customer/listpage.jsp</result>  
+		     <result name="screenFind" >/jsp/customer/list.jsp</result>
+		     
+		     <!-- 综合查询 客户查询 -->
+		     <result name="select">/jsp/customer/select.jsp</result>
+		     <result name="All">/jsp/customer/selectList.jsp</result>
+		     <result name="selectLevel">/jsp/customer/levelList.jsp</result>
+		     <result name="source">/jsp/customer/sourceList.jsp</result>
+		     
+		   </action>
+		 
+		   <!-- linkMan 模块 -->
+		   <action name="linkMan_*" class="linkManAction" method="{1}">
+		   
+		   <result name="addPage">/jsp/linkman/add.jsp</result>
+		    <result name="addLinkman">/jsp/success.jsp</result>
+		     <!-- 列表显示 -->
+		    <result name="list">/jsp/linkman/list.jsp</result>
+		    <result name="input">/jsp/error.jsp</result>
+		    <!-- 模糊查询 -->
+		     <result name="findDim">/jsp/linkman/list.jsp</result>
+		      <result name="test">/index.jsp</result>
+		      <!-- 修改联系人 -->
+		      <result name="showLinkMan">/jsp/linkman/edit.jsp</result>
+		      <result name="submit">/jsp/success.jsp</result>
+		   </action>
+		   
+		   <!-- Visit -->
+		   <action name="visit_*" class="visitAction" method="{1}">
+		    <result name="addPage">/jsp/visit/add.jsp</result>
+		    <result name="addVisit">/jsp/success.jsp</result>
+		       <!-- 列表显示 -->
+		    <result name="list">/jsp/visit/list.jsp</result>
+		     <!-- 模糊查询  -->
+		      <result name="findDim">/jsp/visit/list.jsp</result>
+		   </action>
+		   
+		  
+		
+	</package>
+</struts>
+	

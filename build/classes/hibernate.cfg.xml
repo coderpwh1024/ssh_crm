@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+		
+		 
+		<!-- 数据库的方言:根据底层的数据库生成不同的SQL -->
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+		<!-- 配置显示SQL -->
+		<property name="hibernate.show_sql">true</property>
+		<!-- 配置格式化SQL -->
+		<property name="hibernate.format_sql">true</property>
+		<!-- 配置hbm2ddl -->
+		<property name="hibernate.hbm2ddl.auto">update</property>
+	
+		<!-- 加载映射文件 -->
+	 	<mapping resource="com/mycode/ssh/entity/User.hbm.xml"/>
+	 	<mapping resource="com/mycode/ssh/entity/Customer.hbm.xml"/>
+	 	<mapping resource="com/mycode/ssh/entity/LinkMan.hbm.xml"/>
+	    <mapping resource="com/mycode/ssh/entity/Visit.hbm.xml"/>
+		 
+	</session-factory>
+</hibernate-configuration>
