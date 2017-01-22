@@ -93,4 +93,16 @@ public class CustomerService {
 		return customerDao.source();
 	}
 
+	public List<Customer> findAllpageCustomer(int begin, int rows) {
+		// TODO Auto-generated method stub
+		return customerDao.findPage(begin, rows);
+	}
+
+	public int findCount() {
+		// TODO Auto-generated method stub
+		return customerDao.findCount();
+	}
+
+	 
+
 }

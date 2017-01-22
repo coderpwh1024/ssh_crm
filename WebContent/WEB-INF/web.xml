@@ -12,14 +12,14 @@
 		<param-value>classpath:bean.xml</param-value>
 	</context-param>
 
-     <!--  <filter>
+       <filter>
      <filter-name>openSessionInViewFilter</filter-name>
      <filter-class>org.springframework.orm.hibernate5.support.OpenSessionInViewFilter</filter-class>
    </filter>
     <filter-mapping>
      <filter-name>openSessionInViewFilter</filter-name>
      <url-pattern>/*</url-pattern>
-   </filter-mapping>   -->
+   </filter-mapping>  
 
 	<!-- 配置struts2过滤器 -->
 	<filter>

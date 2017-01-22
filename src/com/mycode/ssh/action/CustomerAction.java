@@ -1,8 +1,15 @@
 package com.mycode.ssh.action;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.struts2.ServletActionContext;
 
+import com.alibaba.fastjson.JSON;
 import com.mycode.ssh.entity.Customer;
 import com.mycode.ssh.entity.PageBean;
 import com.mycode.ssh.service.CustomerService;
@@ -48,12 +55,12 @@ public class CustomerAction extends ActionSupport implements ModelDriven<Custome
 		ServletActionContext.getRequest().setAttribute("list", list);
 		return "selectLevel";
 	}
-	 public String source(){
+
+	public String source() {
 		List list = customerService.source();
 		ServletActionContext.getRequest().setAttribute("list", list);
-		 return "source";
-	 }
-	
+		return "source";
+	}
 
 	public String deleteCus() {
 
@@ -124,6 +131,73 @@ public class CustomerAction extends ActionSupport implements ModelDriven<Custome
 
 		ServletActionContext.getRequest().setAttribute("pageBean", pageBean);
 		return "listpage";
+	}
+
+	// json 格式
+	public String getListJson() throws Exception {
+		List<Customer> list = customerService.findAll();
+		// list---> json
+		/*
+		 * String jsonlist = JSON.toJSONString(list);
+		 * System.out.println(jsonlist);
+		 */
+		// 最终格式: "totoal" :20,"rows" :[{},{}]
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("total", list.size());
+		map.put("rows", list);
+		String jsonmap = JSON.toJSONString(map);
+		System.out.println(jsonmap);
+
+		HttpServletResponse response = ServletActionContext.getResponse();
+
+		response.setContentType("application/json;charset=utf-8");
+		response.getWriter().write(jsonmap);
+		return NONE;
+	}
+
+	private int page;
+	private int rows;
+
+	public int getPage() {
+		return page;
+	}
+
+	public void setPage(int page) {
+		this.page = page;
+	}
+
+	public int getRows() {
+		return rows;
+	}
+
+	public void setRows(int rows) {
+		this.rows = rows;
+	}
+
+	// json 格式分页
+	public String getFindAllpageJson() throws Exception {
+		int begin = (page - 1) * rows;
+		List<Customer> list = customerService.findAllpageCustomer(begin, rows);
+		int total = customerService.findCount();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("total", total);
+		map.put("rows", list);
+		String json = JSON.toJSONString(map);
+		HttpServletResponse response = ServletActionContext.getResponse();
+		response.setContentType("application/json;charset=utf-8");
+		response.getWriter().write(json);
+		return NONE;
+	}
+   // 添加客户
+	public String addCustomerJson() throws IOException {
+		customerService.add(customer);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("success", true);
+		String json = JSON.toJSONString(map);
+		HttpServletResponse response = ServletActionContext.getResponse();
+		response.setContentType("application/json;charset=utf-8");
+		response.getWriter().write(json);
+		return NONE;
 	}
 
 }

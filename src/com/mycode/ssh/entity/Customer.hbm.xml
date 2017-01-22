@@ -21,7 +21,7 @@
 
 		<!-- Customer(一) LinkMan(多) -->
 		<set name="setCusVisit">
-			<key column="cvid"></key>
+			<key column="cvid"></key> 
 			<one-to-many class="com.mycode.ssh.entity.Visit" />
 		</set>
 
